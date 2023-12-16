@@ -1,18 +1,29 @@
 <?php
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
 Route::get('/', function () {
-    return view('welcome');
+    $response = Http::withToken(config('services.openai.secret'))
+        ->post('https://api.openai.com/v1/chat/completions', [
+            'model' => "gpt-3.5-turbo",
+            "messages" => [
+                [
+                    'role' => 'system',
+                    'content' => 'you are are PHP programmer'
+                ],
+                [
+                    'role' => 'user',
+                    'content' => 'what is the most used programming language?'
+                ]
+            ]
+        ]);
+
+    $jsonResponse = $response->json('choices.0.message.content');
+
+    if (is_null($jsonResponse)){
+        dd($response->json());
+    }
+
+    dd($jsonResponse);
 });
