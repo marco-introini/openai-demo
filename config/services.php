@@ -32,7 +32,7 @@ return [
     ],
 
     'openai' => [
-        'secret' => env('SERVICES.OPENAI.SECRET'),
+        'secret' => env('OPENAI_API_KEY'),
     ],
 
 ];
