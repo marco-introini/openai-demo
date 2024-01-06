@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+
+    // simple interaction
     $response = Http::withToken(config('services.openai.secret'))
         ->post('https://api.openai.com/v1/chat/completions', [
             'model' => "gpt-3.5-turbo",
