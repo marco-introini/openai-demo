@@ -52,4 +52,15 @@ class AIChat
         return $this;
     }
 
+    public function speech(string $message): string
+    {
+        $mp3 = OpenAI::audio()->speech([
+           'model' => 'tts-1',
+            'input' => $message,
+            'voice' => 'alloy'
+        ]);
+
+        return $mp3;
+    }
+
 }
