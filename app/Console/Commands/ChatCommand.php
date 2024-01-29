@@ -4,9 +4,11 @@ namespace App\Console\Commands;
 
 use App\Services\AIChat;
 use Illuminate\Console\Command;
+use JetBrains\PhpStorm\NoReturn;
 use function Laravel\Prompts\outro;
 use function Laravel\Prompts\spin;
 use function Laravel\Prompts\text;
+use function Laravel\Prompts\info;
 
 class ChatCommand extends Command
 {
@@ -14,6 +16,7 @@ class ChatCommand extends Command
 
     protected $description = 'Chat with OpenAI';
 
+    #[NoReturn]
     public function handle(): void
     {
 
