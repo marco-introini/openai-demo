@@ -11,7 +11,10 @@
         "laravel/prompts": "^0.1.14",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
-        "openai-php/laravel": "^0.8.1"
+        "livewire/livewire": "^3.4",
+        "livewire/volt": "^1.6",
+        "openai-php/laravel": "^0.8.1",
+        "robsontenorio/mary": "^1.20"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
