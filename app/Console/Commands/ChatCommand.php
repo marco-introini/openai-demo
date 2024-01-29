@@ -12,15 +12,18 @@ use function Laravel\Prompts\info;
 
 class ChatCommand extends Command
 {
-    protected $signature = 'chat';
+    protected $signature = 'chat {--system=}';
 
     protected $description = 'Chat with OpenAI';
 
     #[NoReturn]
     public function handle(): void
     {
-
         $chat = new AIChat();
+
+        if ($this->option('system')) {
+            $chat->systemMessage($this->option('system'));
+        }
 
         $question = text(
             label: 'What is your question for AI?',
@@ -31,7 +34,7 @@ class ChatCommand extends Command
             spin(fn() => $chat->send($question), 'Sending request...')
         );
 
-        while ($question = text('Do you want to respond?')) {
+        while ($question = text('Do you want to respond? (return to exit)')) {
             info(
                 spin(fn() => $chat->send($question), 'Sending request...')
             );

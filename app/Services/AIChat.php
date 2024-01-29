@@ -11,10 +11,7 @@ class AIChat
 
     public function systemMessage(string $message): static
     {
-        $this->messages[] = [
-            'role' => 'system',
-            'content' => $message
-        ];
+        $this->addMessage($message,'system');
 
         return $this;
     }
