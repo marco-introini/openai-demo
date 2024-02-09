@@ -73,3 +73,34 @@ Route::post('/image', function (){
         'imageUrl' => $imageUrl,
     ]);
 });
+
+Route::post('/json_response', function (){
+    $validated = request()->validate([
+        'comment' => ['required', 'string']
+    ]);
+
+    $prompt = $validated['comment'];
+
+    $response = OpenAI::chat()->create([
+        'model' => 'gpt-3.5-turbo-1106',
+        'messages' => [
+            ['role' => 'system', 'content' => 'You are a forum moderator who always respond using JSON'],
+            [
+                'role' => 'user',
+                'content' => <<<EOT
+Please inspect the following text and determine if it is spam.
+{$prompt}
+Expected Response Example:
+{
+    "is_spam": true|false
+    "message": "explanation"
+}
+EOT
+            ]
+
+        ],
+        'response_format' => ['type' => 'json_object']
+    ]);
+
+    dd($response->choices[0]->message->content);
+});
