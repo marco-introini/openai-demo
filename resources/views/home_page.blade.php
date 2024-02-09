@@ -24,6 +24,8 @@
         </form>
     </div>
 @else
+    <div class="p-3">
+        <h1 class="text-xl">Generate audio Demo</h1>
     <form method="POST" action="/generate" class="bg-violet-50 p-6 rounded-3xl">
         @csrf
         <x-input name="topic" label="Insert Topic" placeholder="Text here" icon="o-document-text"
@@ -32,6 +34,19 @@
             <x-button name="submit" type="submit" class="mx-auto mt-5">Submit Topic</x-button>
         </div>
     </form>
+    </div>
 @endif
+
+<div class="p-3">
+    <h1 class="text-xl">Generate image Demo</h1>
+    <form method="POST" action="/image" class="bg-violet-50 p-6 rounded-3xl">
+        @csrf
+        <x-textarea name="prompt" label="Insert Image prompt" placeholder="Text here" icon="o-document-text"
+                 hint="Insert the prompt for image generation" required/>
+        <div class="mx-auto w-fit">
+            <x-button name="submit" type="submit" class="mx-auto mt-5">Submit Prompt</x-button>
+        </div>
+    </form>
+</div>
 
 </body>

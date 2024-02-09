@@ -3,6 +3,7 @@
 use App\Services\AIChat;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
+use OpenAI\Laravel\Facades\OpenAI;
 
 Route::get('/', function () {
     return view('home_page');
@@ -16,7 +17,7 @@ Route::post('/generate', function () {
 
     $chat = new AIChat();
 
-    $response = $chat->send('Tell me something about '.$validated['topic']);
+    $response = $chat->send('Tell me something about '.$validated['topic'].' in about 30 words');
 
     $mp3 = $chat->speech($response);
 
@@ -52,4 +53,23 @@ Route::get('/simple', function () {
     }
 
     dd($jsonResponse);
+});
+
+Route::post('/image', function (){
+    $validated = request()->validate([
+        'prompt' => ['required', 'string']
+    ]);
+
+    $prompt = $validated['prompt'];
+
+    $response = OpenAI::images()->create([
+        'prompt' => $prompt,
+        'model' => 'dall-e-3',
+    ]);
+
+    $imageUrl = $response->data[0]->url;
+
+    return view('show-image',[
+        'imageUrl' => $imageUrl,
+    ]);
 });
